@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Clubs NI</title>
+   </head>
+
+  <body onLoad='javascript:checkLogin();return false;'>
+    </body
+  <script src="assets/js/bootstrap-typeahead.js"></script>
+    <script src="assets/js/parse-1.0.22.min.js"></script>
+
+    <script type="text/javascript">
+function checkLogin() {
+  Parse.initialize("TIldwuoIRCtapKy7qoijP8TLFRXhCkIRc42AcCaT", "UAMfXaWzr0BQAxcCCaIjZD7HWGmWPXRHdZEwzpDO");
+  var currentUser = Parse.User.current();
+if (currentUser) {
+location.replace("home.html");
+
+} else {
+  console.log('not logged ');
+location.replace("Login.html");
+}
+}
+</script>

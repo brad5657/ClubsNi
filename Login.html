@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Clubs NI</title>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+<link rel="stylesheet" type="text/css" href="assets/css/structure.css">
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+
+</head>
+
+<body onLoad='hideAlert()'>
+<div id="wrap">			
+<div id="container" style="position:fixed;
+  left:50%;
+  top:10%;"width="1000px">
+
+<img src="assets/img/artwork.png" width =150px height=150; />
+   
+  </div>
+
+<form class="box login"  action="javascript:login()">
+
+	<fieldset class="boxBody" id='loginBox'>
+		 <div class="alert" width="300px" id='loggingIn' style="display:none"
+>
+   		 Logging in <img src='assets/img/logging.gif'/>
+  		 </div>
+   		 <div class="alert alert-error"  id='loginFailed' style="display:none"
+>
+   		 We couldn't log you in. Check your username and password!
+ 		 </div>
+	  <label>Username</label>
+	  <input type="text" tabindex="1" placeholder="Username" id='username' required>
+	  <label><a href="#" class="rLink" tabindex="5">Forget your password?</a>Password</label>
+	  <input type="password" tabindex="2" placeholder="Password" id='password' required>
+        <input type="submit" hidefocus="true" style="visibility: hidden;"/>
+
+	</fieldset>
+	 <footer>
+	<!--<label><input type="checkbox" tabindex="3">Keep me logged in</label> -->
+	  <input class="btnLogin" onClick="login()" value="Login" tabindex="4">
+	</footer> 
+</form>
+</div>
+</body>
+
+ <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap-transition.js"></script>
+    <script src="assets/js/bootstrap-alert.js"></script>
+    <script src="assets/js/bootstrap-modal.js"></script>
+    <script src="assets/js/bootstrap-dropdown.js"></script>
+    <script src="assets/js/bootstrap-scrollspy.js"></script>
+    <script src="assets/js/bootstrap-tab.js"></script>
+    <script src="assets/js/bootstrap-tooltip.js"></script>
+    <script src="assets/js/bootstrap-popover.js"></script>
+    <script src="assets/js/bootstrap-button.js"></script>
+    <script src="assets/js/bootstrap-collapse.js"></script>
+    <script src="assets/js/bootstrap-carousel.js"></script>
+    <script src="assets/js/bootstrap-typeahead.js"></script>
+    <script src="assets/js/bootstrap-timepicker.js"></script>
+            <script src="assets/js/jquery.validate.min.js"></script>
+
+    <script src="assets/js/parse-1.0.22.min.js"></script>
+    <script type="text/javascript">
+function login() {
+	$("#loginFailed").hide();
+    $("#loggingIn").show();
+	var username = document.getElementById('username');
+	var password = document.getElementById('password');
+	Parse.initialize("TIldwuoIRCtapKy7qoijP8TLFRXhCkIRc42AcCaT", "UAMfXaWzr0BQAxcCCaIjZD7HWGmWPXRHdZEwzpDO");
+	Parse.User.logIn(username.value, password.value, {
+  				success: function(user) {
+              console.log('success');
+
+				location.replace("home.html");
+ 		},
+ 				error: function(user, error) {
+            console.log('faild');
+
+ 					    $("#loggingIn").hide();
+
+				$("#loginFailed").show();
+ 				 }
+		});
+}
+function hideAlert() {
+	 $("#loggingIn").hide();
+	$("#loginFailed").hide();
+}
+</script>
+
+</html>

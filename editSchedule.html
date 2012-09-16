@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Edit Schedule</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script src="assets/js/parse-1.0.22.min.js"></script>
+    <script>   Parse.initialize("TIldwuoIRCtapKy7qoijP8TLFRXhCkIRc42AcCaT", "UAMfXaWzr0BQAxcCCaIjZD7HWGmWPXRHdZEwzpDO"); </script>
+    <script type="text/javascript">var currentUser = Parse.User.current();
+  if(currentUser) {
+
+  }
+  else {
+    location.replace('Login.html');
+  }
+</script>
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="assets/css/structure.css" rel="stylesheet">
+    <link href="assets/css/cus-icons.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6- 8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+  </head>
+    <body onLoad='javascript:checkLogin();javascript:resetSchedule();javascript:resetPromo();'>
+
+
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+       <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          
+          <a class="brand" href=home.html">
+                      <img src="assets/img/icon.png"/> Clubs NI</a>
+
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li class="disabled"><a href="#">Profile</a></li>
+              <li class="unactive"><a href="reviews.html">Our Reviews</a></li>
+              <li class="unactive"><a href="#">Analytics</a></li>
+
+            </ul>
+
+          </div><!--/.nav-collapse -->
+
+        </div>
+      </div>
+    </div>
+        <br/>
+    <div class="well well-small">
+         <a class="btn btn-primary" onClick="logOut()" style='float:right;'>Logout</a>
+        Welcome, <script> 
+                if(Parse.User.current())document.write(Parse.User.current().get('username'));</script>
+          </div>
+
+    <div class="container">
+          <div class="container-fluid">
+            <span class="span12">
+
+               <legend style='float:right;'>Schedule</legend>
+               <div class="alert" width="300px" id="scheduleLoading" style="display:none">
+       Loading <img src='assets/img/logging.gif'/>
+       </div>
+       <div class="alert alert-error"  id='scheduleFailed' style="display:none">
+       There was a problem getting the schedule information.
+     </div>
+              <a class="btn" onClick="resetSchedule()" id='refreshButton'><i class="cus-arrow-refresh"></i></a>      
+              <button class="btn" onClick="editSchedule()" rel="tooltip" title="Edit the schedule"><i class="cus-page-white-edit"></i></button>
+               <br/><br/>    
+               <table class="table-bordered table-striped table-hover table" id="scheduleTable">
+
+            <thead><th>Night</th><th>Description</th><th>Price</th></thead>
+           
+
+            <tbody></tbody>
+          </table>
+
+    <div class="btn-group btn-group-vertical">
+
+    <button class="btn" onClick="window.location.href='AddNight.html'">Add A Promotion</button>
+    <script language="javascript" type="text/javascript">
+    function loadAdd()
+      {
+      location.replace("AddNights.html");
+      }
+
+      </script>
+ 
+
+    </div>
+          <legend style='float:right;'>Promotions</legend>
+              <a class="btn" onClick="resetPromo()" id='refreshButton'><i class="icon-refresh"></i></a>
+              <button class="btn" onClick="editPromo()" rel="tooltip" title="Edit a current entry"><i class="icon-edit"></i></button>
+              <br/><br/>            
+              <table class="table-bordered table-striped table-hover table" id="promotions">
+              <thead><th>Promo Name</th><th>Details</th><th>Price</th></thead>
+           
+
+            <tbody></tbody>
+          </table>
+        </span>
+    </div>
+     
+    </div> <!-- /container -->
+
+
+   
+    <!-- Le javascript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap-transition.js"></script>
+    <script src="assets/js/bootstrap-alert.js"></script>
+    <script src="assets/js/bootstrap-modal.js"></script>
+    <script src="assets/js/bootstrap-dropdown.js"></script>
+    <script src="assets/js/bootstrap-scrollspy.js"></script>
+    <script src="assets/js/bootstrap-tab.js"></script>
+    <script src="assets/js/bootstrap-tooltip.js"></script>
+    <script src="assets/js/bootstrap-popover.js"></script>
+    <script src="assets/js/bootstrap-button.js"></script>
+    <script src="assets/js/bootstrap-collapse.js"></script>
+    <script src="assets/js/bootstrap-carousel.js"></script>
+    <script src="assets/js/bootstrap-typeahead.js"></script>
+
+    <script type="text/javascript">
+function resetSchedule()
+{
+   $("#scheduleLoading").show();
+
+  var button = document.getElementById('refreshButton');
+  button.onClick =null;
+     var table = document.getElementById("scheduleTable");
+  for(var i = table.rows.length - 1; i > 0; i--)
+  {
+    table.deleteRow(i);
+  }
+  var review = Parse.Object.extend("Schedule");
+  var query = new Parse.Query(review);
+  var bookingData =null;
+  query.find({
+  success: function(results) {
+    fillSchedule(results);
+
+  },
+  error: function(error) {
+    alert("Error: " + error.code + " " + error.message);
+  }
+});
+
+}
+function resetPromo() {
+  var button = document.getElementById('refreshButton');
+  button.onClick =null;
+  var table = document.getElementById("promotions");
+//or use : var table = document.all.tableid;
+  for(var i = table.rows.length - 1; i > 0; i--)
+  {
+    table.deleteRow(i);
+  }
+
+  var Promotions = Parse.Object.extend("Promotions");
+  var promoQuery = new Parse.Query(Promotions);
+  promoQuery.find({
+  success: function(results) {
+    fillPromos(results);
+
+  },
+  error: function(error) {
+  $("#scheduleFailed").show();
+  }
+});
+
+}
+
+function checkLogin() {
+  var currentUser = Parse.User.current();
+  if(currentUser) {
+
+  }
+  else {
+    location.replace('Login.html');
+  }
+
+}
+function logOut() {
+  Parse.User.logOut();
+  location.replace('index.html');
+}
+function fillSchedule(results) {
+  console.log(results);
+  var days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+  for(var weekDay =0;weekDay<days.length;weekDay++) {
+         if (!document.getElementsByTagName) return;
+         var tbl = document.getElementById('scheduleTable')
+         tabBody=tbl.getElementsByTagName("TBODY").item(0);
+         row=document.createElement("TR");
+         cell1 = document.createElement("TD");
+         cell2 = document.createElement("TD");
+        cell3 = document.createElement("TD");
+        console.log(weekDay);
+        var place = null;
+        for(var r =0;r<results.length;r++) {
+          if(results[r].get('night')==days[weekDay]) {
+            place = results[r];
+          }
+        }
+        textnode1=document.createTextNode(days[weekDay]);
+
+        textnode2=document.createTextNode(place.get('description'));
+        textnode3=document.createTextNode("2.1");
+        cell1.appendChild(textnode1);
+        cell2.appendChild(textnode2);
+        cell3.appendChild(textnode3);
+        row.appendChild(cell1);
+        row.appendChild(cell2);
+        row.appendChild(cell3);
+        tabBody.appendChild(row);
+      
+  }
+     $("#scheduleLoading").hide();
+
+}
+function fillPromos(results) {
+  console.log(results);
+  for(i=0;i<results.length;i++) {
+         if (!document.getElementsByTagName) return;
+         var tbl = document.getElementById('promotions')
+         tabBody=tbl.getElementsByTagName("TBODY").item(0);
+         row=document.createElement("TR");
+         cell1 = document.createElement("TD");
+         cell2 = document.createElement("TD");
+        cell3 = document.createElement("TD");
+        var promo = results[i];
+        textnode1=document.createTextNode(promo.get('name'));
+
+        textnode2=document.createTextNode('Description');
+        textnode3=document.createTextNode(promo.get('date'));
+        cell1.appendChild(textnode1);
+        cell2.appendChild(textnode2);
+        cell3.appendChild(textnode3);
+        row.appendChild(cell1);
+        row.appendChild(cell2);
+        row.appendChild(cell3);
+
+        tabBody.appendChild(row);
+      }
+}
+function hideAlert() {
+   $("#scheduleLoading").hide();
+  $("#scheduleFailed").hide();
+}
+</script>
+  </body>
+</html>
+
