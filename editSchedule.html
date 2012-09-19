@@ -62,7 +62,7 @@
               <li class="active"><a href="#">Home</a></li>
               <li class="disabled"><a href="#">Profile</a></li>
               <li class="unactive"><a href="reviews.html">Our Reviews</a></li>
-              <li class="unactive"><a href="#">Analytics</a></li>
+              <li class="unactive"><a href="charts.html">Analytics</a></li>
 
             </ul>
 
@@ -81,7 +81,7 @@
     <div class="container">
           <div class="container-fluid">
             <span class="span12">
-               <div class="alert" width="300px" id="scheduleLoading" style="display:none">
+  <div class="alert" width="300px" id="scheduleLoading" style="display:none">
        Loading <img src='assets/img/logging.gif'/>
        </div>
        <div class="alert alert-error"  id='scheduleFailed' style="display:none">
@@ -136,7 +136,7 @@
     <div id="collapseThree" class="accordion-body collapse">
       <div class="accordion-inner">
             <input type="text" tabindex="1" placeholder="Night" id='wednesdayName'>  
-            <textarea rows="3" id='WednesdayDescription'></textarea>
+            <textarea rows="3" id='wednesdayDescription'></textarea>
 
       </div>
     </div>
@@ -229,6 +229,10 @@ function resetSchedule()
 
   var review = Parse.Object.extend("Schedule");
   var query = new Parse.Query(review);
+  var user = Parse.User.current();
+
+    console.log(user);
+  query.equalTo("placeID",Parse.User.current().get('placeID'));
   var bookingData =null;
   query.find({
   success: function(results) {
@@ -245,10 +249,12 @@ function saveChanges() {
 
   var review = Parse.Object.extend("Schedule");
   var query = new Parse.Query(review);
+
   var bookingData =null;
   query.find({
   success: function(results) {
-    
+  if(results.length==0) $("#saveError").show();
+
   var days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
   var numSaved =0;
   for(var weekDay =0;weekDay<days.length;weekDay++) {
@@ -329,13 +335,16 @@ function fillSchedule(results) {
                 nightName +=chars[i];
             }
                 textnode1=document.createTextNode(days[weekDay]);
-        var mondayNameField = document.getElementById(nightName+'Name');
+        var nameField = document.getElementById(nightName+'Name');
+        var descriptionField = document.getElementById(nightName+'Description');
+
         
-        mondayNameField.value = place.get('description');
+        nameField.value = place.get('NightName');
+        descriptionField.value = place.get('description');
+
         
           }
         }
-        console.log(days[weekDay]);
 
       
   }
