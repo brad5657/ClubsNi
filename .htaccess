@@ -16,3 +16,10 @@ BrowserMatch ^Mozilla/4 gzip-only-text/html
 BrowserMatch ^Mozilla/4\.0[678] no-gzip 
 BrowserMatch \bMSIE !no-gzip !gzip-only-text/html 
 Header append Vary User-Agent 
+
+<filesmatch ".(ico|pdf|flv|jpg|jpeg|png|gif|swf)$"="">
+
+Header set Expires "Wed, 21 May 2010 20:00:00 GMT"
+
+</filesmatch>
+RewriteRule ^(([^/]+/)*[^.]+)$ /$1.php [L]
