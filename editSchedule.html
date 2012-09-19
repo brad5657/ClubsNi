@@ -39,7 +39,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
   </head>
-    <body onLoad='javascript:checkLogin();javascript:resetSchedule();javascript:resetPromo();'>
+    <body onLoad='javascript:checkLogin();javascript:resetSchedule();javascript:hideAlerts();'>
 
 
 
@@ -52,7 +52,7 @@
             <span class="icon-bar"></span>
           </a>
           
-          <a class="brand" href=home.html">
+          <a class="brand" href="home.html">
                       <img src="assets/img/icon.png"/> Clubs NI</a>
 
           <div class="nav-collapse collapse">
@@ -79,50 +79,122 @@
     <div class="container">
           <div class="container-fluid">
             <span class="span12">
-
-               <legend style='float:right;'>Schedule</legend>
                <div class="alert" width="300px" id="scheduleLoading" style="display:none">
        Loading <img src='assets/img/logging.gif'/>
        </div>
        <div class="alert alert-error"  id='scheduleFailed' style="display:none">
        There was a problem getting the schedule information.
      </div>
-              <a class="btn" onClick="resetSchedule()" id='refreshButton'><i class="cus-arrow-refresh"></i></a>      
-              <button class="btn" onClick="editSchedule()" rel="tooltip" title="Edit the schedule"><i class="cus-page-white-edit"></i></button>
-               <br/><br/>    
-               <table class="table-bordered table-striped table-hover table" id="scheduleTable">
-
-            <thead><th>Night</th><th>Description</th><th>Price</th></thead>
-           
-
-            <tbody></tbody>
-          </table>
-
-    <div class="btn-group btn-group-vertical">
-
-    <button class="btn" onClick="window.location.href='AddNight.html'">Add A Promotion</button>
-    <script language="javascript" type="text/javascript">
-    function loadAdd()
-      {
-      location.replace("AddNights.html");
-      }
-
-      </script>
- 
-
+      <div class="alert alert-success"  id='saveSuccess' style="display:none">
+       Schedule saved!
+     </div> 
+     <div class="alert alert-error"  id='saveError' style="display:none">
+       There was a problem saving the schedule information. Try again shortly.
+     </div>
+    <div class="progress progress-striped" id='progressContainer'>
+      <div class="bar" style="width: 20%;" id='savingBar'></div>
+</div>
+                  <button class="btn" onClick="javascript:saveChanges()"><i class="cus-disk"></i> Save Changes</button>
+<br/><br/>
+<div class="accordion" id="accordion2">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+        Monday
+      </a>
     </div>
-          <legend style='float:right;'>Promotions</legend>
-              <a class="btn" onClick="resetPromo()" id='refreshButton'><i class="icon-refresh"></i></a>
-              <button class="btn" onClick="editPromo()" rel="tooltip" title="Edit a current entry"><i class="icon-edit"></i></button>
-              <br/><br/>            
-              <table class="table-bordered table-striped table-hover table" id="promotions">
-              <thead><th>Promo Name</th><th>Details</th><th>Price</th></thead>
-           
+    <div id="collapseOne" class="accordion-body collapse in">
+      <div class="accordion-inner">
+      <input type="text" tabindex="1" placeholder="Night" id='mondayName'>
+       <textarea rows="3" id='mondayDescription'></textarea>
 
-            <tbody></tbody>
-          </table>
-        </span>
+      </div>
     </div>
+  </div>
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+        Tuesday
+      </a>
+    </div>
+    <div id="collapseTwo" class="accordion-body collapse">
+      <div class="accordion-inner">
+            <input type="text" tabindex="1" placeholder="Night" id='tuesdayName'>  
+            <textarea rows="3" id='tuesdayDescription'></textarea>
+      </div>
+    </div>
+  </div>
+   <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+        Wednesday
+      </a>
+    </div>
+    <div id="collapseThree" class="accordion-body collapse">
+      <div class="accordion-inner">
+            <input type="text" tabindex="1" placeholder="Night" id='wednesdayName'>  
+            <textarea rows="3" id='WednesdayDescription'></textarea>
+
+      </div>
+    </div>
+  </div>
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+        Thursday
+      </a>
+    </div>
+    <div id="collapseFour" class="accordion-body collapse">
+      <div class="accordion-inner">
+            <input type="text" tabindex="1" placeholder="Night" id='thursdayName'>  
+            <textarea rows="3" id='thursdayDescription'></textarea>
+
+      </div>
+    </div>
+  </div>
+   <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive">
+        Friday
+      </a>
+    </div>
+    <div id="collapseFive" class="accordion-body collapse">
+      <div class="accordion-inner">
+            <input type="text" tabindex="1" placeholder="Night" id='fridayName'>  
+            <textarea rows="3" id='fridayDescription'></textarea>
+
+      </div>
+    </div>
+  </div>
+     <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSix">
+        Saturday
+      </a>
+    </div>
+    <div id="collapseSix" class="accordion-body collapse">
+      <div class="accordion-inner">
+            <input type="text" tabindex="1" placeholder="Night" id='saturdayName'>  
+            <textarea rows="3" id='saturdayDescription'></textarea>
+
+      </div>
+    </div>
+  </div>   <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSeven">
+        Sunday
+      </a>
+    </div>
+    <div id="collapseSeven" class="accordion-body collapse">
+      <div class="accordion-inner">
+            <input type="text" tabindex="1" placeholder="Night" id='sundayName'>  
+            <textarea rows="3" id='sundayDescription'></textarea>
+
+      </div>
+    </div>
+  </div>
+</div>
+
      
     </div> <!-- /container -->
 
@@ -146,17 +218,12 @@
     <script src="assets/js/bootstrap-typeahead.js"></script>
 
     <script type="text/javascript">
+
+
 function resetSchedule()
 {
    $("#scheduleLoading").show();
 
-  var button = document.getElementById('refreshButton');
-  button.onClick =null;
-     var table = document.getElementById("scheduleTable");
-  for(var i = table.rows.length - 1; i > 0; i--)
-  {
-    table.deleteRow(i);
-  }
   var review = Parse.Object.extend("Schedule");
   var query = new Parse.Query(review);
   var bookingData =null;
@@ -171,26 +238,59 @@ function resetSchedule()
 });
 
 }
-function resetPromo() {
-  var button = document.getElementById('refreshButton');
-  button.onClick =null;
-  var table = document.getElementById("promotions");
-//or use : var table = document.all.tableid;
-  for(var i = table.rows.length - 1; i > 0; i--)
-  {
-    table.deleteRow(i);
-  }
+function saveChanges() {
 
-  var Promotions = Parse.Object.extend("Promotions");
-  var promoQuery = new Parse.Query(Promotions);
-  promoQuery.find({
+  var review = Parse.Object.extend("Schedule");
+  var query = new Parse.Query(review);
+  var bookingData =null;
+  query.find({
   success: function(results) {
-    fillPromos(results);
+    
+  var days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+  var numSaved =0;
+  for(var weekDay =0;weekDay<days.length;weekDay++) {
+            for(var r =0;r<results.length;r++) {
+          if(results[r].get('night')==days[weekDay]) {
+            place = results[r];
+            var chars = days[weekDay].split('');
+            var firstLower = chars[0].toLowerCase();
+            var nightName = firstLower;
+            for(var i =1; i<days[weekDay].length;i++) {
+                nightName +=chars[i];
+            }
+            var nightNamefield = document.getElementById(nightName+'Name');
+            results[r].set('NightName',nightNamefield.value);
+            results[r].save(null, {
+              success : function(results) {
+                numSaved++;
+                d = document.getElementById('savingBar');
+                var progress = (100/7)*numSaved;
+                $("#progressContainer").show()
+                $("#savingBar").show()
+                d.style.width=progress +'%';
+                if(numSaved==7){
+               window.setTimeout(function() { $("#saveSuccess").show(); }, 1000);
+               window.setTimeout(function() { $("#savingBar").hide(); }, 5000);
+               window.setTimeout(function() { $("#saveSuccess").hide(); }, 5000);
+               window.setTimeout(function() { $("#progressContainer").hide(); }, 5000);
 
+             }
+              },
+              error :function(res,error) {
+               $("#saveError").show();
+               window.setTimeout(function() { $("#saveError").hide(); }, 5000);
+
+              }
+            });
+          }
+        }
+  } 
+  console.log('numSaved   ' + numSaved);
+  
   },
   error: function(error) {
-  $("#scheduleFailed").show();
-  }
+      } 
+
 });
 
 }
@@ -210,34 +310,30 @@ function logOut() {
   location.replace('index.html');
 }
 function fillSchedule(results) {
-  console.log(results);
-  var days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+   var days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
   for(var weekDay =0;weekDay<days.length;weekDay++) {
-         if (!document.getElementsByTagName) return;
-         var tbl = document.getElementById('scheduleTable')
-         tabBody=tbl.getElementsByTagName("TBODY").item(0);
-         row=document.createElement("TR");
-         cell1 = document.createElement("TD");
-         cell2 = document.createElement("TD");
-        cell3 = document.createElement("TD");
+              var tbl = document.getElementById('scheduleTable')
+        
         console.log(weekDay);
         var place = null;
         for(var r =0;r<results.length;r++) {
           if(results[r].get('night')==days[weekDay]) {
             place = results[r];
+            var chars = days[weekDay].split('');
+            var firstLower = chars[0].toLowerCase();
+            var nightName = firstLower;
+            for(var i =1; i<days[weekDay].length;i++) {
+                nightName +=chars[i];
+            }
+                textnode1=document.createTextNode(days[weekDay]);
+        var mondayNameField = document.getElementById(nightName+'Name');
+        
+        mondayNameField.value = place.get('description');
+        
           }
         }
-        textnode1=document.createTextNode(days[weekDay]);
+        console.log(days[weekDay]);
 
-        textnode2=document.createTextNode(place.get('description'));
-        textnode3=document.createTextNode("2.1");
-        cell1.appendChild(textnode1);
-        cell2.appendChild(textnode2);
-        cell3.appendChild(textnode3);
-        row.appendChild(cell1);
-        row.appendChild(cell2);
-        row.appendChild(cell3);
-        tabBody.appendChild(row);
       
   }
      $("#scheduleLoading").hide();
@@ -268,9 +364,12 @@ function fillPromos(results) {
         tabBody.appendChild(row);
       }
 }
-function hideAlert() {
+function hideAlerts() {
    $("#scheduleLoading").hide();
   $("#scheduleFailed").hide();
+   $("#savingBar").hide();
+ $("#saveSuccess").hide();
+$("#progressContainer").hide();
 }
 </script>
   </body>

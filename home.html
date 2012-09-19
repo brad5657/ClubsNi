@@ -98,20 +98,21 @@
             <tbody></tbody>
           </table>
 
-    <div class="btn-group btn-group-vertical">
+    
+          <legend style='float:right;'>Promotions</legend>
+          <div class="btn-group btn-group-vertical">
 
     <button class="btn" onClick="window.location.href='AddNight.html'">Add A Promotion</button>
     <script language="javascript" type="text/javascript">
     function loadAdd()
       {
-      location.replace("AddNights.html");
+      window.location.href ="AddNights.html";
       }
 
       </script>
  
 
     </div>
-          <legend style='float:right;'>Promotions</legend>
               <a class="btn" onClick="resetPromo()" id='refreshButton'><i class="icon-refresh"></i></a>
               <button class="btn" onClick="editPromo()" rel="tooltip" title="Edit a current entry"><i class="icon-edit"></i></button>
               <br/><br/>            
@@ -269,7 +270,7 @@ function fillPromos(results) {
       }
 }
 function editSchedule() {
-  location.replace('editSchedule.html');
+   window.location.href ="editSchedule.html";
 }
 function hideAlert() {
    $("#scheduleLoading").hide();
