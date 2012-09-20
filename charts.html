@@ -151,13 +151,10 @@ function drawGraph () {
                 type: 'bar'
             },
             title: {
-                text: 'Historic World Population by Region'
-            },
-            subtitle: {
-                text: 'Source: Wikipedia.org'
+                text: 'GuestList by night'
             },
             xAxis: {
-                categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+                categories: ['MOoday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
                 title: {
                     text: null
                 }
@@ -165,7 +162,7 @@ function drawGraph () {
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Population (millions)',
+                    text: 'No. of people',
                     align: 'high'
                 },
                 labels: {
@@ -175,7 +172,7 @@ function drawGraph () {
             tooltip: {
                 formatter: function() {
                     return ''+
-                        this.series.name +': '+ this.y +' millions';
+                        this.series.name +': '+ this.y +' people';
                 }
             },
             plotOptions: {
@@ -200,13 +197,13 @@ function drawGraph () {
                 enabled: false
             },
             series: [{
-                name: 'Year 1800',
+                name: 'Standard Queue Jump',
                 data: [107, 31, 635, 203, 2]
             }, {
-                name: 'Year 1900',
+                name: 'Package A',
                 data: [133, 156, 947, 408, 6]
             }, {
-                name: 'Year 2008',
+                name: 'Pacekage B',
                 data: [973, 914, 4054, 732, 34]
             }]
         });
